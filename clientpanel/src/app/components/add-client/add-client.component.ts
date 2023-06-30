@@ -3,7 +3,7 @@ import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Client } from 'src/app/models/Client';
-/* import { ToastrService } from 'ngx-toastr'; */
+ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-add-client',
   templateUrl: './add-client.component.html',
@@ -20,11 +20,28 @@ export class AddClientComponent {
   disableBalancedOnAdd :boolean= false;
   @ViewChild('clientForm')Form:any;
 // private toatrService: ToastrService
-  constructor(private clientService: ClientService, private router: Router,
+  constructor(private clientService: ClientService, 
+    private router: Router,
+    private toastrService :ToastrService
     ) {}
 
   onSubmit(form: NgForm) {
-    this.clientService.newClient(form.value);
+    if(this.disableBalancedOnAdd){
+     this.client.balance=0;
+    }
+    if(!form.valid){
+      this.toastrService.error('everything is broken', 'Major Error', {
+        timeOut: 3000,
+      });
+    }
+    else{
+      this.clientService.newClient(form.value);
+      this.toastrService .success('Inserted Successfully', 'Toastr fun!',{
+        timeOut: 3000,
+      });
+      this.router.navigate(['/'])
+    }
+    
   } 
  /*  onSubmit({value,valid}:{value:Client,valid:boolean}) {
    console.log(value,valid);

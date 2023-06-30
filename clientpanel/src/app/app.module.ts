@@ -48,6 +48,8 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     AngularFireModule.initializeApp(environment.firebase, 'clientpanel'),
     AngularFireAuthModule,
     AngularFirestoreModule ,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
    // BrowserAnimationsModule, // required animations module
    // ToastrModule added
   ],
